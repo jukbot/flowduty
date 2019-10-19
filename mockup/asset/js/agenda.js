@@ -27,16 +27,18 @@ function rendAgendaSlot(){
 	let q = 1;
 	agenda_body.innerHTML = '';
 	for (let i in slotNew) {
-		let id = slotNew[i].id;
-		let start = slotNew[i].start;
-		let stop = slotNew[i].stop;
-		let title = slotNew[i].title;
-		let venue = slotNew[i].venue;
-		let dur = slotNew[i].dur;
-		let row = document.createElement('div');
-		row.innerHTML = renderSlotItem(id,q,start,stop,title,venue,dur,i);
-		agenda_body.appendChild(row);
-		q++;
+		if (slotNew[i] != undefined) {
+			let id = slotNew[i].id;
+			let start = slotNew[i].start;
+			let stop = slotNew[i].stop;
+			let title = slotNew[i].title;
+			let venue = slotNew[i].venue;
+			let dur = slotNew[i].dur;
+			let row = document.createElement('div');
+			row.innerHTML = renderSlotItem(id,q,start,stop,title,venue,dur,i);
+			agenda_body.appendChild(row);
+			q++;
+		}
 	}
 	expectMinD = -1;
 }
@@ -173,7 +175,7 @@ const renderSlotItem = (id,q,start,stop,title,venue,dur,minD) => {
 	${venue}
 	</inner></box>
 	<box col="1"><inner class="b7">
-	<input class="padding-xs-hzt  input wide t-center no-bd" type="number" placeholder="D" required="" value="${dur}" step="5" min="5" slot-id="${minD}" onchange="changeDuration(this)">
+	<input class="padding-xs-hzt  input wide t-center no-bd" type="number" placeholder="D" required="" value="${dur}" step="5" min="0" slot-id="${minD}" onchange="changeDuration(this)">
 	</inner></box>
 	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 	..
@@ -193,8 +195,19 @@ Number.prototype.pad = function(size) {
 const changeDuration = (x) => {
 	newDuration = parseInt(x.value);
 	minD = x.getAttribute('slot-id');
-	slotTmp[minD].dur = newDuration;
-	calSlotOnChangeDuration(minD);
+	if (newDuration == 0) {
+		if (confirm('ต้องการลบ slot นี้หรือไม่')) {
+			slotNew[minD] = undefined;
+			rendAgendaSlot();
+		}
+		else{
+			x.value = 5;
+		}
+	}
+	else{
+		slotTmp[minD].dur = newDuration;
+		calSlotOnChangeDuration(minD);
+	}
 }
 
 let calSlotOnChangeDuration = (newMinD) => {
