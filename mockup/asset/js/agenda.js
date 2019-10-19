@@ -101,13 +101,13 @@ function prepareSlotTmp(){
 
 const timeToMinD = (h,m) => {return (h*60)+m}
 
-const minDtoTime = (minD) => {
+const minDtoTime = minD => {
 	let h = parseInt(minD/60);
 	let m = minD%60;
 	return [h,m];
 }
 
-function renderSlotItem(id,q,start,stop,title,venue,dur){
+const renderSlotItem = (id,q,start,stop,title,venue,dur) => {
 	let txt = `
 	<theboxes class="top spacing-s -clip">
 	<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
@@ -133,3 +133,23 @@ function renderSlotItem(id,q,start,stop,title,venue,dur){
 	return txt;
 }
 
+
+class Slot{
+	constructor(title,minD,duration){
+		this.title = title;
+		this.minD = minD;
+		this.duration = duration;
+		this.start = start();
+	}
+	start(){
+		let h = parseInt(this.minD/60);
+		let m = this.minD%60;
+		return [h,m];
+	}
+	stop(){
+		let md = this.minD+this.duration;
+		let h = parseInt(md/60);
+		let m = md%60;
+		return [h,m];
+	}
+}
