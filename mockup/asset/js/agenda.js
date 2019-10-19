@@ -1,5 +1,5 @@
 let agd = {};
-agd.title = "IT CAMP 2019 | Day-1";
+agd.title = "YCC 2019 | Day-1";
 agd.workspace = {};
 agd.workspace.name = "IT CAMP 2019";
 agd.workspace.id = 369;
@@ -155,12 +155,11 @@ const minDtoTime = minD => {
 let expectMinD = -1;
 const renderSlotItem = (id,q,start,stop,title,venue,dur,minD) => {
 	let txt = '';
-	console.log(expectMinD);
 	if (expectMinD != -1 && expectMinD != minD) {
-		txt += `<sp class="bg-smoke"></sp>`;
+		txt += `<sp class="bg-smoke" ondblclick="removeGap(${minD-expectMinD},${minD},this)"></sp>`;
 	}
 	txt += `
-	<theboxes class="top spacing-s -clip">
+	<theboxes class="middle spacing-s -clip">
 	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 	${q}
 	</inner></box>
@@ -170,11 +169,11 @@ const renderSlotItem = (id,q,start,stop,title,venue,dur,minD) => {
 	<box col="4"><inner class="padding padding-vs-hzt t-left b7">
 	${title}
 	</inner></box>
-	<box col="3"><inner class="padding padding-vs-hzt t-center b7">
+	<box col="3"><inner class="padding padding-vs-hzt t-left b5">
 	${venue}
 	</inner></box>
-	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
-	${dur}
+	<box col="1"><inner class="b7">
+	<input class="padding-xs-hzt  input wide t-center no-bd" type="number" placeholder="D" required="" value="${dur}" step="5" min="5" slot-id="${minD}" onchange="changeDuration(this)">
 	</inner></box>
 	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 	..
@@ -182,7 +181,6 @@ const renderSlotItem = (id,q,start,stop,title,venue,dur,minD) => {
 	</theboxes><sp class="px bg-grey-3"></sp>
 	`;
 	expectMinD = parseInt(dur) + parseInt(minD);
-	console.log(expectMinD)
 	return txt;
 }
 
@@ -192,3 +190,58 @@ Number.prototype.pad = function(size) {
 	return s;
 }
 
+const changeDuration = (x) => {
+	newDuration = parseInt(x.value);
+	minD = x.getAttribute('slot-id');
+	slotTmp[minD].dur = newDuration;
+	calSlotOnChangeDuration(minD);
+}
+
+let calSlotOnChangeDuration = (newMinD) => {
+	slotNew = [];
+	NextMinD = 0;
+	for(let i in slotTmp){
+		if (i<=newMinD) {
+			slotNew[i] = slotTmp[i];
+			NextMinD = slotTmp[i].minD+slotTmp[i].dur;
+			slotNew[i].stop = minDtoTime(NextMinD);
+		}
+		else{
+			calSlotOnChangeBelow(i,NextMinD);
+		}
+	}
+	slotTmp = slotNew;
+	rendAgendaSlot();
+	document.querySelector(`[slot-id="${newMinD}"]`).focus();
+}
+
+const calSlotOnChangeBelow = (i,NextMinD) =>{
+	if (i >= NextMinD) {
+		slotNew[i] = slotTmp[i];
+		NextMinD = slotTmp[i].minD+slotTmp[i].dur;
+	}
+	else{
+		slotNew[NextMinD] = slotTmp[i];
+		slotNew[NextMinD].minD = NextMinD;
+		slotNew[NextMinD].start = minDtoTime(NextMinD);
+		slotNew[NextMinD].stop = minDtoTime(NextMinD+slotTmp[i].dur);
+		NextMinD = NextMinD+slotTmp[i].dur;
+	}
+}
+
+const removeGap = (dur,minD,x) =>{
+	slotNew = [];
+	for(let i in slotTmp){
+		if (i<minD) {
+			slotNew[i] = slotTmp[i];
+		}else{
+			newMinD = slotTmp[i].minD - dur;
+			slotNew[newMinD] = slotTmp[i];
+			slotNew[newMinD].minD = newMinD;
+			slotNew[newMinD].start = minDtoTime(newMinD);
+			slotNew[newMinD].stop = minDtoTime(newMinD + slotTmp[i].dur);
+		}
+	}
+	slotTmp = slotNew;
+	rendAgendaSlot();
+}

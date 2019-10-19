@@ -35,7 +35,7 @@
 								<box col="4"><inner class="padding padding-vs-hzt t-left b7">
 									Title
 								</inner></box>
-								<box col="3"><inner class="padding padding-vs-hzt t-center b7">
+								<box col="3"><inner class="padding padding-vs-hzt t-left b7">
 									Venue
 								</inner></box>
 								<box col="1"><inner class="padding padding-vs-hzt t-center b7">
@@ -56,25 +56,25 @@
 					</div>
 					<sp class="rm"></sp>
 					<div id="agenda_cmd" class="bg-white round padding-rm shadow">
-						<h5>Add Que</h5>
+						<h3>Add Que</h3>
 						<sp class="m"></sp>
 						<form onsubmit="return agd_addNew()">
 							<theboxes class="top spacing-s -clip">
 								<box col="5"><inner class=" t-left b7">
-									Title
+									<h5 class="cl-grey-6">Title</h5>
 									<sp class="s"></sp>
 								</inner></box>
 								<box col="3.5"><inner class=" t-left b7">
-									Venue
+									<h5 class="cl-grey-6">Venue</h5>
 									<sp class="s"></sp>
 								</inner></box>
 
 								<box col="2"><inner class=" t-center b7">
-									Start Time
+									<h5 class="cl-grey-6">Start Time</h5>
 									<sp class="s"></sp>
 								</inner></box>
 								<box col="1.5"><inner class=" t-center b7" title="on munites.">
-									Dur (m.)
+									<h5 class="cl-grey-6">Dur (m.)</h5>
 									<sp class="s"></sp>
 								</inner></box>
 							</theboxes>
@@ -94,7 +94,7 @@
 								</inner></box>
 
 								<box col="1.5"><inner class=" t-center b7">
-									<input class="padding-xs-hzt  input wide t-center" type="number" id="agdNew_duration" placeholder="D" required value="60" step="5" min="0" >
+									<input class="padding-xs-hzt  input wide t-center" type="number" id="agdNew_duration" placeholder="D" required value="60" step="5" min="5" >
 								</inner></box>
 							</theboxes>
 							<sp class="m"></sp>
