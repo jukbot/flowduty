@@ -5,6 +5,8 @@ agd.workspace.name = "IT CAMP 2019";
 agd.workspace.id = 369;
 let slotTmp = [];
 let slotNew = [];
+let slotNew2 = [];
+let slotLast = [];
 let nowID = 0;
 let slotArray = [];
 
@@ -32,10 +34,11 @@ function rendAgendaSlot(){
 		let venue = slotNew[i].venue;
 		let dur = slotNew[i].dur;
 		let row = document.createElement('div');
-		row.innerHTML = renderSlotItem(id,q,start,stop,title,venue,dur);
+		row.innerHTML = renderSlotItem(id,q,start,stop,title,venue,dur,i);
 		agenda_body.appendChild(row);
 		q++;
 	}
+	expectMinD = -1;
 }
 
 function agd_addNew(){
@@ -50,7 +53,6 @@ function agd_addNew(){
 	agdNew_duration.value = '60';
 	agdNew_venue.value = '';
 	createSlotObj(title,startH,startM,dur,venue);
-	rendAgendaSlot();
 	return false;
 }
 
@@ -64,11 +66,56 @@ function createSlotObj(title,startH,startM,dur,venue){
 		venue:venue,
 		minD:timeToMinD(startH,startM)
 	}
-	slotTmp[timeToMinD(startH,startM)] = newSlot;
-	prepareSlotTmp();
+	prepareSlotTmp(newSlot);
 }
 
-function prepareSlotTmp(){
+function prepareSlotTmp(newSlot){
+	slotNew = [];
+	NextMinD = newSlot.minD+newSlot.dur;
+	for(let i in slotTmp){
+		if (i>=newSlot.minD) {
+			//สลอตเก่าอยู่ข้างล่าง
+			if (i<NextMinD) {
+				slotNew[NextMinD] = slotTmp[i];
+				slotNew[NextMinD].minD = NextMinD;
+				slotNew[NextMinD].start = minDtoTime(NextMinD);
+				slotNew[NextMinD].stop = minDtoTime(NextMinD+slotTmp[i].dur);
+				NextMinD += slotTmp[i].dur;
+				if (i == newSlot.minD) {
+					slotTmp[i] = undefined;
+				}
+			}
+			else{
+				slotNew[i] = slotTmp[i];
+				NextMinD = i+slotNew[i].dur;
+			}
+		}
+	}
+	belowMinD = newSlot.minD;
+	for (let i = newSlot.minD; i > 0; i--) {
+		if (slotTmp[i] != undefined) {
+			if (i+slotTmp[i].dur<=belowMinD) {
+				slotNew[i] = slotTmp[i];
+				belowMinD = slotTmp[i].minD;
+			}
+			else{
+				belowMinD = belowMinD - slotTmp[i].dur;
+				slotNew[belowMinD] = slotTmp[i];
+				slotNew[belowMinD].minD = belowMinD;
+				slotNew[belowMinD].start = minDtoTime(belowMinD);
+				slotNew[belowMinD].stop = minDtoTime(belowMinD + slotTmp[i].dur);
+			}
+		}
+	}
+	slotNew[newSlot.minD] = newSlot;
+	slotNew[newSlot.minD].start = minDtoTime(newSlot.minD);
+	slotNew[newSlot.minD].stop = minDtoTime(newSlot.minD+newSlot.dur);
+	rendAgendaSlot();
+	slotTmp = slotNew;
+
+}
+
+function prepareSlotTmpOld(){
 	slotNew = [];
 	let NextMinD = 0;
 	let isFirstSlot = 1;
@@ -84,7 +131,6 @@ function prepareSlotTmp(){
 		}
 	}
 	for (let i in slotNew) {
-		// let hm = minDtoTime(slotNew[i].minD);
 		let startTime = slotNew[i].minD;
 		let stopTime = slotNew[i].minD+slotNew[i].dur;
 		startTime = minDtoTime(startTime);
@@ -106,50 +152,43 @@ const minDtoTime = minD => {
 	let m = minD%60;
 	return [h,m];
 }
-
-const renderSlotItem = (id,q,start,stop,title,venue,dur) => {
-	let txt = `
+let expectMinD = -1;
+const renderSlotItem = (id,q,start,stop,title,venue,dur,minD) => {
+	let txt = '';
+	console.log(expectMinD);
+	if (expectMinD != -1 && expectMinD != minD) {
+		txt += `<sp class="bg-smoke"></sp>`;
+	}
+	txt += `
 	<theboxes class="top spacing-s -clip">
-	<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 	${q}
 	</inner></box>
-	<box col="2"><inner class="padding-s padding-vs-hzt t-center b7">
-	${start.h}:${start.m} - ${stop.h}:${stop.m}
+	<box col="2"><inner class="padding padding-vs-hzt t-center b5 bg-grey-1">
+	${start[0]}:${(start[1]).pad()} - ${stop[0]}:${(stop[1]).pad()}
 	</inner></box>
-	<box col="4"><inner class="padding-s padding-vs-hzt t-center b7">
+	<box col="4"><inner class="padding padding-vs-hzt t-left b7">
 	${title}
 	</inner></box>
-	<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
-	${dur}
-	</inner></box>
-	<box col="3"><inner class="padding-s padding-vs-hzt t-center b7">
+	<box col="3"><inner class="padding padding-vs-hzt t-center b7">
 	${venue}
 	</inner></box>
-	<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
+	${dur}
+	</inner></box>
+	<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 	..
 	</inner></box>
-	</theboxes><sp class="px bg-grey-2"></sp>
-	`
+	</theboxes><sp class="px bg-grey-3"></sp>
+	`;
+	expectMinD = parseInt(dur) + parseInt(minD);
+	console.log(expectMinD)
 	return txt;
 }
 
-
-class Slot{
-	constructor(title,minD,duration){
-		this.title = title;
-		this.minD = minD;
-		this.duration = duration;
-		this.start = start();
-	}
-	start(){
-		let h = parseInt(this.minD/60);
-		let m = this.minD%60;
-		return [h,m];
-	}
-	stop(){
-		let md = this.minD+this.duration;
-		let h = parseInt(md/60);
-		let m = md%60;
-		return [h,m];
-	}
+Number.prototype.pad = function(size) {
+	var s = String(this);
+	while (s.length < (size || 2)) {s = "0" + s;}
+	return s;
 }
+

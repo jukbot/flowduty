@@ -23,71 +23,78 @@
 						<h6 class="size-vs padding-s-hzt upper inline-block cl-lightblue">agenda</h6>
 					</div>
 					<sp class="m"></sp>
-					<div class="bg-white round shadow padding-rm">
+					<div class="bg-white round shadow">
 						<div class="div-table-head bg-smoke">
 							<theboxes class="top spacing-s -clip">
-								<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+								<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 									Q
 								</inner></box>
-								<box col="2"><inner class="padding-s padding-vs-hzt t-center b7">
+								<box col="2"><inner class="padding padding-vs-hzt t-center b7">
 									Time
 								</inner></box>
-								<box col="4"><inner class="padding-s padding-vs-hzt t-center b7">
+								<box col="4"><inner class="padding padding-vs-hzt t-left b7">
 									Title
 								</inner></box>
-								<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
-									Dur
-								</inner></box>
-								<box col="3"><inner class="padding-s padding-vs-hzt t-center b7">
+								<box col="3"><inner class="padding padding-vs-hzt t-center b7">
 									Venue
 								</inner></box>
-								<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+								<box col="1"><inner class="padding padding-vs-hzt t-center b7">
+									Dur
+								</inner></box>
+								<box col="1"><inner class="padding padding-vs-hzt t-center b7">
 								</inner></box>
 							</theboxes>
 							<sp class="xs bg-grey-3"></sp>
 						</div>
 						<div class="div-table-body" id="agenda_body">
-							
+							<div class="t-center">
+								<sp class="vs"></sp>
+								. . .
+								<sp class="m"></sp>
+							</div>
 						</div>
 					</div>
 					<sp class="rm"></sp>
-					<div id="agenda_cmd" class="bg-white round padding-rm">
+					<div id="agenda_cmd" class="bg-white round padding-rm shadow">
 						<h5>Add Que</h5>
 						<sp class="m"></sp>
 						<form onsubmit="return agd_addNew()">
 							<theboxes class="top spacing-s -clip">
+								<box col="5"><inner class=" t-left b7">
+									Title
+									<sp class="s"></sp>
+								</inner></box>
+								<box col="3.5"><inner class=" t-left b7">
+									Venue
+									<sp class="s"></sp>
+								</inner></box>
+
 								<box col="2"><inner class=" t-center b7">
 									Start Time
 									<sp class="s"></sp>
 								</inner></box>
-								<box col="5"><inner class=" t-center b7">
-									Title
-									<sp class="s"></sp>
-								</inner></box>
-								<box col="1"><inner class=" t-center b7" title="on munites.">
-									Min.
-									<sp class="s"></sp>
-								</inner></box>
-								<box col="4"><inner class=" t-center b7">
-									Venue
+								<box col="1.5"><inner class=" t-center b7" title="on munites.">
+									Dur (m.)
 									<sp class="s"></sp>
 								</inner></box>
 							</theboxes>
 							<theboxes class="top spacing-s -clip">
-								<box col="1"><inner class=" t-center b7">
-									<input class="input wide t-center" type="tel" id="agdNew_startTimeH" placeholder="H" value="" required>
-								</inner></box>
-								<box col="1"><inner class=" t-center b7">
-									<input class="input wide t-center" type="tel" id="agdNew_startTimeM" placeholder="M" value="00" required>
-								</inner></box>
+
 								<box col="5"><inner class=" t-center b7">
-									<input class="input wide" type="text" id="agdNew_title" placeholder="Title" required>
+									<input class="input wide" type="text" id="agdNew_title" placeholder="Title" required value="">
+								</inner></box>
+								<box col="3.5"><inner class=" t-center b7">
+									<input class="input wide" type="text" id="agdNew_venue" placeholder="Venue" value="">
 								</inner></box>
 								<box col="1"><inner class=" t-center b7">
-									<input class="input wide t-center" type="tel" id="agdNew_duration" placeholder="D" required value="60">
+									<input class="padding-xs-hzt input wide t-center" type="number" id="agdNew_startTimeH" placeholder="H" min="0" max="23"required value="">
 								</inner></box>
-								<box col="4"><inner class=" t-center b7">
-									<input class="input wide" type="text" id="agdNew_venue" placeholder="Venue">
+								<box col="1"><inner class=" t-center b7">
+									<input class="padding-xs-hzt input wide t-center" type="number" id="agdNew_startTimeM" placeholder="M" value="00" required step="5" min="0" max="55">
+								</inner></box>
+
+								<box col="1.5"><inner class=" t-center b7">
+									<input class="padding-xs-hzt  input wide t-center" type="number" id="agdNew_duration" placeholder="D" required value="60" step="5" min="0" >
 								</inner></box>
 							</theboxes>
 							<sp class="m"></sp>
