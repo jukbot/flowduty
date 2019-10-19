@@ -99,11 +99,9 @@ function prepareSlotTmp(){
 	slotTmp = slotNew;
 }
 
-function timeToMinD(h,m){
-	return (h*60)+m;
-}
+const timeToMinD = (h,m) => {return (h*60)+m}
 
-function minDtoTime(minD){
+const minDtoTime = (minD) => {
 	let h = parseInt(minD/60);
 	let m = minD%60;
 	return [h,m];
