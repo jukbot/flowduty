@@ -7,12 +7,107 @@
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="asset/jayss/jayss.css">
 	<link rel="stylesheet" type="text/css" href="asset/style.css">
-
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<!-- <link href="https://fonts.googleapis.com/css?family=Mitr:400,600" rel="stylesheet"> -->
 	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"> -->
 </head>
 <body>
+	<!--=== The Section Boxes : agenda ===-->
+	<section id="agenda" class="padding-l-vtc">
+		<div class="cont-pd">
+			<theboxes class="top spacing-l -clip">
+				<!-- Agenda Frame -->
+				<box col="8"><inner class="">
+					<div class="v-top-wrap">
+						<h2 class="capital inline-block" id="agd_title">{{ message }}</h2>
+						<h6 class="size-vs padding-s-hzt upper inline-block cl-lightblue">agenda</h6>
+					</div>
+					<sp class="m"></sp>
+					<div class="bg-white round shadow padding-rm">
+						<div class="div-table-head bg-smoke">
+							<theboxes class="top spacing-s -clip">
+								<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+									Q
+								</inner></box>
+								<box col="2"><inner class="padding-s padding-vs-hzt t-center b7">
+									Time
+								</inner></box>
+								<box col="4"><inner class="padding-s padding-vs-hzt t-center b7">
+									Title
+								</inner></box>
+								<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+									Dur
+								</inner></box>
+								<box col="3"><inner class="padding-s padding-vs-hzt t-center b7">
+									Venue
+								</inner></box>
+								<box col="1"><inner class="padding-s padding-vs-hzt t-center b7">
+								</inner></box>
+							</theboxes>
+							<sp class="xs bg-grey-3"></sp>
+						</div>
+						<div class="div-table-body" id="agenda_body">
+							
+						</div>
+					</div>
+					<sp class="rm"></sp>
+					<div id="agenda_cmd" class="bg-white round padding-rm">
+						<h5>Add Que</h5>
+						<sp class="m"></sp>
+						<form onsubmit="return agd_addNew()">
+							<theboxes class="top spacing-s -clip">
+								<box col="2"><inner class=" t-center b7">
+									Start Time
+									<sp class="s"></sp>
+								</inner></box>
+								<box col="5"><inner class=" t-center b7">
+									Title
+									<sp class="s"></sp>
+								</inner></box>
+								<box col="1"><inner class=" t-center b7" title="on munites.">
+									Min.
+									<sp class="s"></sp>
+								</inner></box>
+								<box col="4"><inner class=" t-center b7">
+									Venue
+									<sp class="s"></sp>
+								</inner></box>
+							</theboxes>
+							<theboxes class="top spacing-s -clip">
+								<box col="1"><inner class=" t-center b7">
+									<input class="input wide t-center" type="tel" id="agdNew_startTimeH" placeholder="H" value="" required>
+								</inner></box>
+								<box col="1"><inner class=" t-center b7">
+									<input class="input wide t-center" type="tel" id="agdNew_startTimeM" placeholder="M" value="00" required>
+								</inner></box>
+								<box col="5"><inner class=" t-center b7">
+									<input class="input wide" type="text" id="agdNew_title" placeholder="Title" required>
+								</inner></box>
+								<box col="1"><inner class=" t-center b7">
+									<input class="input wide t-center" type="tel" id="agdNew_duration" placeholder="D" required value="60">
+								</inner></box>
+								<box col="4"><inner class=" t-center b7">
+									<input class="input wide" type="text" id="agdNew_venue" placeholder="Venue">
+								</inner></box>
+							</theboxes>
+							<sp class="m"></sp>
+							<div class="t-right">
+								<button href="#!" class="btn shadow">Add</button>
+							</div>
+						</form>
+					</div>
+				</inner></box>
+				<!-- Duty Frame -->
+				<box col="4"><inner class="">
+					<h2 class="capital">duties</h2>
+					<sp class="m"></sp>
+					<div class="bg-white round shadow padding-rm">
 
-
+					</div>
+				</inner></box>
+			</theboxes>
+		</div>
+	</section>
+	<script type="text/javascript" src="asset/js/agenda.js"></script>
 </body>
 </html>
