@@ -101,6 +101,10 @@ var duty = {
 	"s1":0
 }
 
+var theVenue = [
+	"ออดิทอเรียม", "โถง"
+]
+
 slotNew[540] = {
 	"id": "s0",
 	"title": "พิธีเปิด",
@@ -157,6 +161,16 @@ function rendAgendaSlot(){
 		}
 	}
 	expectMinD = -1;
+}
+
+function renderVenueList() {
+	let option = "";
+	for (let i in theVenue) {
+		console.log(theVenue[i]);
+		option += `<option>${theVenue[i]}</option>`
+		
+	}
+	theVenue_list.innerHTML = option;
 }
 
 function agd_addNew(){
@@ -380,3 +394,4 @@ const removeGap = (dur,minD,x) =>{
 
 rendAgendaInfo();
 rendAgendaSlot();
+renderVenueList();

@@ -84,7 +84,10 @@
 									<input class="input wide" type="text" id="agdNew_title" placeholder="Title" required value="">
 								</inner></box>
 								<box col="3.5"><inner class=" t-center b7">
-									<input class="input wide" type="text" id="agdNew_venue" placeholder="Venue" value="">
+									<input class="input wide" type="text" id="agdNew_venue" placeholder="Venue" value="" list="theVenue_list">
+									<datalist id="theVenue_list">
+										
+									</datalist>
 								</inner></box>
 								<box col="1"><inner class=" t-center b7">
 									<select class="padding-xs-hzt input wide t-center" type="number" id="agdNew_startTimeH" placeholder="H" min="0" max="23"required value="" list="agdNew_startTimeH_list">
