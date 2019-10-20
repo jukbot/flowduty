@@ -1599,7 +1599,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"] {
 	line-height: 2.4em;
 	padding: 0 1em;
 }
-select{
+select,select.wide{
 	height: 2.5em;
 	vertical-align: bottom;
 }
