@@ -1,0 +1,10 @@
+{
+  "name": "flowduty",
+  "version": "1.0.0",
+  "description": "Easy task management tools for camper",
+  "author": "Jabont",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },  
+  "license": "Apache-2.0"
+}
