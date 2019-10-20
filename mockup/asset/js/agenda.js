@@ -7,7 +7,7 @@ let slotTmp = [];
 let slotNew = [];
 let slotNew2 = [];
 let slotLast = [];
-let nowID = 0;
+let nowID = 2;
 let slotArray = [];
 
 var v_agd_title = new Vue({
@@ -17,7 +17,123 @@ var v_agd_title = new Vue({
 	}
 })
 
-rendAgendaInfo();
+var people = {
+	"1234":{
+		id:"1234",
+		display:"Jabont",
+		role:"Advisor",
+		squad:["สันทนาการ","ที่ปรึกษา"],
+		permission:{
+			read:true,
+			write:true
+		}
+	},
+	"1235":{
+		id:"1235",
+		display:"New",
+		role:"รองประธานค่าย",
+		squad:["ประธานค่าย"],
+		permission:{
+			read:true,
+			write:true
+		}
+	},
+	"1236":{
+		id:"1236",
+		display:"Ong",
+		role:"ประธานค่าย",
+		squad:["ประธานค่าย"],
+		permission:{
+			read:true,
+			write:true
+		}
+	},
+};
+
+var squad = {
+	"สันทนาการ":{
+		people:1,
+		dur:0,
+	},
+	"ที่ปรึกษา":{
+		people:1,
+		dur:0,
+	},
+	"วิชาการ":{
+		people:0,
+		dur:0,
+	},
+	"ประสานงาน":{
+		people:0,
+		dur:0,
+	},
+	"สถานที่":{
+		people:0,
+		dur:0,
+	},
+	"สวัสดิการ":{
+		people:0,
+		dur:0,
+	},
+	"ประธานค่าย":{
+		people:2,
+		dur:0,
+	},
+	"การ์ด":{
+		people:0,
+		dur:0,
+	},
+	"พยาบาล":{
+		people:0,
+		dur:0,
+	},
+	"ทะเบียน":{
+		people:0,
+		dur:0,
+	},
+	"พิธีการ":{
+		people:0,
+		dur:0,
+	},
+};
+
+var duty = {
+	"s1":0
+}
+
+slotNew[540] = {
+	"id": "s0",
+	"title": "พิธีเปิด",
+	"dur": 60,
+	"venue": "Audi",
+	"minD": 540,
+	"start": [
+	9,
+	0
+	],
+	"stop": [
+	10,
+	0
+	]
+}
+slotNew[720] = {
+	"id": "s1",
+	"title": "พักกลางวัน",
+	"dur": 60,
+	"venue": "โรงอาหาร",
+	"minD": 720,
+	"start": [
+	12,
+	0
+	],
+	"stop": [
+	13,
+	0
+	]
+}
+
+slotTmp = slotNew;
+
 
 function rendAgendaInfo(){
 	v_agd_title.message = agd.title;
@@ -53,16 +169,18 @@ function agd_addNew(){
 	agdNew_startTimeM.value = '00';
 	agdNew_title.value = '';
 	agdNew_duration.value = '60';
-	agdNew_venue.value = '';
-	createSlotObj(title,startH,startM,dur,venue);
+	agdNew_venue.value = '';	
+	let id = "s"+nowID;
+	nowID++;
+	createSlotObj(id,title,startH,startM,dur,venue);
 	return false;
 }
 
 
-function createSlotObj(title,startH,startM,dur,venue){
-	nowID++;
+function createSlotObj(id,title,startH,startM,dur,venue){
+	
 	let newSlot =  {
-		id:"s"+nowID,
+		id:id,
 		title:title,
 		dur:dur,
 		venue:venue,
@@ -259,3 +377,6 @@ const removeGap = (dur,minD,x) =>{
 	slotTmp = slotNew;
 	rendAgendaSlot();
 }
+
+rendAgendaInfo();
+rendAgendaSlot();
