@@ -49,7 +49,7 @@ function agd_addNew(){
 	let title = agdNew_title.value;
 	let dur = parseInt(agdNew_duration.value);
 	let venue = agdNew_venue.value;
-	agdNew_startTimeH.value = '';
+	agdNew_startTimeH.value = '00';
 	agdNew_startTimeM.value = '00';
 	agdNew_title.value = '';
 	agdNew_duration.value = '60';
@@ -69,6 +69,7 @@ function createSlotObj(title,startH,startM,dur,venue){
 		minD:timeToMinD(startH,startM)
 	}
 	prepareSlotTmp(newSlot);
+	console.log(newSlot);
 }
 
 function prepareSlotTmp(newSlot){
@@ -94,7 +95,7 @@ function prepareSlotTmp(newSlot){
 		}
 	}
 	belowMinD = newSlot.minD;
-	for (let i = newSlot.minD; i > 0; i--) {
+	for (let i = newSlot.minD; i >= 0; i--) {
 		if (slotTmp[i] != undefined) {
 			if (i+slotTmp[i].dur<=belowMinD) {
 				slotNew[i] = slotTmp[i];
@@ -166,10 +167,10 @@ const renderSlotItem = (id,q,start,stop,title,venue,dur,minD) => {
 	${q}
 	</inner></box>
 	<box col="2"><inner class="padding padding-vs-hzt t-center b5 bg-grey-1">
-	${start[0]}:${(start[1]).pad()} - ${stop[0]}:${(stop[1]).pad()}
+	${(start[0]).pad()}:${(start[1]).pad()} - ${(stop[0]).pad()}:${(stop[1]).pad()}
 	</inner></box>
 	<box col="4"><inner class="padding padding-vs-hzt t-left b7">
-	${title}
+	${id} ${title}
 	</inner></box>
 	<box col="3"><inner class="padding padding-vs-hzt t-left b5">
 	${venue}
